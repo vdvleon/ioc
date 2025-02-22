@@ -4,15 +4,24 @@ This is a library that provides a container (registry) for singletons.
 
 ## Example
 
+**container.ts**
+
 ```ts
-// container.ts
-import type { Logger, ILogger } from "./logger";
+import type { Logger } from "./logger";
+import type { AsyncExample } from "./asyncExample";
 
 export const container = new IoCContainer<{
-  [Logger.ID]: Promise<ILogger>;
-}>();
+  // It is possible to register sync loaders.
+  [Logger.ID]: ILogger;
 
-// logger.ts
+  // But it is also possible to register async loaders.
+  [AsyncExample.ID]: Promise<AsyncExample>;
+}>();
+```
+
+**logger.ts**
+
+```ts
 import { container } from "./container";
 
 export interface ILogger {
@@ -33,14 +42,58 @@ export class Logger implements ILogger {
   }
 }
 
+// Register a sync loader.
 container.register(Logger.ID, () => new Logger());
+```
 
-// usage.ts
+**asyncExample.ts**
+
+```ts
 import { container } from "./container";
-import { Logger } from "./loggers";
+import { Logger, ILogger } from "./logger";
 
+export class AsyncExample {
+  public static readonly ID: unique symbol = Symbol(AsyncExample.name);
+
+  public logger: ILogger;
+  public token: string | undefined;
+
+  public constructor(logger: ILogger, token: string | string) {
+    this.logger = logger;
+    this.token = token;
+
+    if (!this.token) {
+      this.logger.log("Initialized without token.");
+    }
+  }
+}
+
+// Register an async loader.
+contaner.register(AsyncExample.ID, async (container) => {
+  const logger = container.get(Logger.ID);
+
+  const response = fetch("http://example.com/get-token");
+  const { token } = (await response.json()) as { token?: string };
+
+  return new AsyncExample(logger, token);
+});
+```
+
+**index.ts**
+
+```ts
+import { container } from "./container";
+import { Logger } from "./logger";
+import { AsyncExample } from "./asyncExample";
+
+// Use the objects from the container.
 const logger = container.get(Logger.ID);
 logger.log("Hello world!");
+
+// Get async objects and use it.
+container
+  .get(AsyncExample.ID)
+  .then((example) => logger.log(`Token: ${example.token}.`));
 ```
 
 More examples can be found in [examples](./examples).
