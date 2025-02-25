@@ -1,7 +1,7 @@
 export class IoCError extends Error {
-  constructor(message: string) {
-    super(message);
+  constructor (message: string) {
+    super(message)
 
-    this.name = "IoCError";
+    this.name = 'IoCError'
   }
 }

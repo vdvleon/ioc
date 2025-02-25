@@ -1,2 +1,2 @@
-export * from "./types";
-export * from "./IoCContainer";
+export * from './types'
+export * from './IoCContainer'
