@@ -8,10 +8,8 @@
     "lint": "ts-standard",
     "lint:fix": "ts-standard --fix"
   },
-  "dependencies": {
-    "typescript": "^5.7.3"
-  },
   "devDependencies": {
+    "typescript": "^5.7.3",
     "@types/node": "^22.13.5",
     "ts-standard": "^12.0.2"
   },
@@ -19,5 +17,22 @@
     "ignore": [
       ".build"
     ]
-  }
+  },
+  "version": "0.0.1",
+  "description": "This is a library that provides a container (registry) for singletons.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdvleon/ioc/"
+  },
+  "keywords": [
+    "ioc",
+    "typescript",
+    "container"
+  ],
+  "author": "Leon van der Veen",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/vdvleon/ioc/issues"
+  },
+  "homepage": "https://github.com/vdvleon/ioc#readme"
 }
