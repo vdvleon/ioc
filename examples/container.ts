@@ -1,4 +1,4 @@
-import { IoCContainer } from '../src'
+import { IoCContainer } from '@vdvleon/ioc'
 import { type Example1 } from './example1'
 import { type Example2 } from './example2'
 import { type Example3 } from './example3'

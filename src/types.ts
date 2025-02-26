@@ -60,7 +60,7 @@ export interface IIoCContainer<Objects extends IoCObjects> {
   register: <const Name extends IoCObjectNames<Objects>>(
     name: Name,
     ...loader: IoCLoader<Objects, Name>
-  ) => IIoCContainer<Objects>
+  ) => this
 
   /**
    * Cleanup all or only the specified objects.
@@ -73,6 +73,13 @@ export interface IIoCContainer<Objects extends IoCObjects> {
   cleanup: <const Name extends IoCObjectNames<Objects>>(
     ...names: Name[]
   ) => Promise<void>
+
+  /**
+   * Directly set an instance for a given object name.
+   * @example
+   * container.set(Logger.ID, mockedLogger)
+   */
+  set: <const Name extends IoCObjectNames<Objects>>(name: Name, instance: Objects[Name]) => this
 
   /**
    * Get instance for the given object name.

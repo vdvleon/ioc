@@ -6,12 +6,17 @@
     "prebuild": "tsc --build --clean",
     "build": "tsc",
     "lint": "ts-standard",
-    "lint:fix": "ts-standard --fix"
+    "lint:fix": "ts-standard --fix",
+    "test": "jest"
   },
   "devDependencies": {
-    "typescript": "^5.7.3",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
-    "ts-standard": "^12.0.2"
+    "jest": "^29.7.0",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.7.3"
   },
   "ts-standard": {
     "ignore": [
@@ -34,5 +39,18 @@
   "bugs": {
     "url": "https://github.com/vdvleon/ioc/issues"
   },
-  "homepage": "https://github.com/vdvleon/ioc#readme"
+  "homepage": "https://github.com/vdvleon/ioc#readme",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-typescript"
+    ]
+  }
 }

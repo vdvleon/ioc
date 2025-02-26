@@ -13,8 +13,8 @@
     "resolveJsonModule": true,
     "rootDir": ".",
     "skipLibCheck": true,
-    "sourceRoot": "/",
     "strictNullChecks": true,
     "target": "es2019"
-  }
+  },
+  "exclude": ["examples/"]
 }

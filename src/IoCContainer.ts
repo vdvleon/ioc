@@ -1,5 +1,3 @@
-import assert from 'node:assert/strict'
-
 import {
   AwaitedObjects,
   IIoCContainer,
@@ -61,6 +59,11 @@ implements IIoCContainer<Objects> {
     return this
   }
 
+  public set<const Name extends IoCObjectNames<Objects>>(name: Name, instance: Objects[Name]): this {
+    this.instances.set(name, instance)
+    return this
+  }
+
   public get<const Name extends IoCObjectNames<Objects>>(
     name: Name
   ): Objects[Name] {
@@ -76,12 +79,11 @@ implements IIoCContainer<Objects> {
     }
 
     const loader = this.loaders.get(name)
-    assert(
-      loader,
-      `Cannot create instance of ${String(
+    if (loader === undefined) {
+      throw new IoCError(`Cannot create instance of ${String(
         name
-      )} because no loader is registered.`
-    )
+      )} because no loader is registered.`)
+    }
 
     // Allow infinute loop detection.
     this.instances.set(name, placeholderSymbol)
