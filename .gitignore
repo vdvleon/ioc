@@ -131,3 +131,6 @@ dist
 
 # TS output
 .build/
+
+# Examples
+examples/package-lock.json
